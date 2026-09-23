@@ -1,0 +1,45 @@
+graph TD
+    subgraph ClientLayer [Capa de Cliente]
+        Client[Cliente Web / Móvil / Postman / Swagger UI]
+    end
+
+    subgraph PresentationLayer [Capa de Presentación / API]
+        Index[index.js / app.js]
+        Routes[Rutas Express<br/><i>festivo.rutas.js</i>]
+        Validators[Middlewares / Validadores<br/><i>festivo.validador.js</i>]
+    end
+
+    subgraph BusinessLayer [Capa de Lógica de Negocio]
+        Controllers[Controladores<br/><i>festivo.controlador.js</i><br/>Cálculos de Pascua y Ley Puente]
+    end
+
+    subgraph DataAccessLayer [Capa de Acceso a Datos]
+        Repositories[Repositorios / Modelos<br/><i>festivo.repositorio.js</i>]
+    end
+
+    subgraph PersistenceLayer [Capa de Persistencia]
+        DB[(Base de Datos MongoDB)]
+    end
+
+    Client -->|1. Petición HTTP GET| Index
+    Index -->|2. Delega a| Routes
+    Routes -->|3. Valida formato de fecha| Validators
+    Validators -->|4. Pasa filtro| Controllers
+    Controllers -->|5. Solicita lista de festivos| Repositories
+    Repositories -->|6. Consulta| DB
+
+    DB -.->|7. Retorna datos base| Repositories
+    Repositories -.->|8. Procesa resultado / Aplica fórmulas| Controllers
+    Controllers -.->|9. Respuesta JSON| Client
+
+    classDef clientStyle stroke:#0288d1,fill:#e1f5fe
+    classDef presentationStyle stroke:#f57c00,fill:#fff3e0
+    classDef businessStyle stroke:#388e3c,fill:#e8f5e9
+    classDef dataStyle stroke:#7b1fa2,fill:#f3e5f5
+    classDef persistenceStyle stroke:#d32f2f,fill:#ffebee
+
+    class ClientLayer clientStyle
+    class PresentationLayer presentationStyle
+    class BusinessLayer businessStyle
+    class DataAccessLayer dataStyle
+    class PersistenceLayer persistenceStyle
