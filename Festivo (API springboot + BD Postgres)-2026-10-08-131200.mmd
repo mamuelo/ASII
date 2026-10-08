@@ -1,0 +1,46 @@
+flowchart TB
+ subgraph ClientLayer["Capa de Cliente"]
+        Client["Cliente Web / Móvil / Postman / Swagger UI"]
+  end
+ subgraph PresentationLayer["Capa de Presentación / API"]
+        Controller["Controladores REST<br><i>CalendarioController</i>"]
+        Endpoints["Endpoints / Métodos Web<br><i>Festivos / Generar calendario / Consultar calendario</i>"]
+  end
+ subgraph BusinessLayer["Capa de Lógica de Negocio"]
+        Service["Servicios de Negocio<br><i>CalendarioService</i><br>Clasificación de días del año"]
+  end
+ subgraph IntegrationLayer["Capa de Integración / Cliente HTTP"]
+        FestivosClient["Cliente API Festivos<br><i>FestivosClient</i><br>Consulta lista de festivos por año"]
+  end
+ subgraph DataAccessLayer["Capa de Acceso a Datos"]
+        Repository["Repositorios JPA<br><i>CalendarioRepository</i>"]
+        Entity["Entidades / Modelos<br><i>Calendario</i>"]
+  end
+ subgraph PersistenceLayer["Capa de Persistencia"]
+        DB[("Base de Datos PostgreSQL")]
+  end
+ subgraph ExternalAPILayer["API Externa"]
+        FestivosAPI["API REST Festivos<br><i>Express JS + MongoDB</i>"]
+  end
+    Client -- "1. Petición HTTP" --> Controller
+    Controller -- "2. Delega operación" --> Endpoints
+    Endpoints -- "3. Ejecuta lógica" --> Service
+    Service -- "4. Solicita festivos del año" --> FestivosClient
+    FestivosClient -- "5. Petición HTTP" --> FestivosAPI
+    FestivosAPI -. "6. Retorna lista de festivos" .-> FestivosClient
+    FestivosClient -. "7. Entrega lista" .-> Service
+    Service -- "8. Genera y clasifica días" --> Entity
+    Entity -- "9. Guarda / consulta" --> Repository
+    Repository -- "10. Consulta / Modifica" --> DB
+    DB -. "11. Retorna datos" .-> Repository
+    Repository -. "12. Retorna calendario" .-> Service
+    Service -. "13. Respuesta" .-> Controller
+    Controller -. "14. Respuesta JSON" .-> Client
+
+    classDef clientStyle stroke:#0288d1,fill:#e1f5fe
+    classDef presentationStyle stroke:#f57c00,fill:#fff3e0
+    classDef businessStyle stroke:#388e3c,fill:#e8f5e9
+    classDef integrationStyle stroke:#00838f,fill:#e0f7fa
+    classDef dataStyle stroke:#7b1fa2,fill:#f3e5f5
+    classDef persistenceStyle stroke:#d32f2f,fill:#ffebee
+    classDef externalStyle stroke:#6a1b9a,fill:#f3e5f5
