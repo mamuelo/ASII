@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "a9e6d8b3-2b4a-4e89-9832-6e9f1a0b3f5c",
+    "name": "API Festivos Colombia - Taller 1 ITM",
+    "description": "Colección de pruebas para la API RESTful de Festivos de Colombia (Taller 1 ITM - Diagramas de Arquitectura).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Verificar Fecha - Festivo Fijo (Año Nuevo)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-01-01",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-01-01"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Verificar Fecha - Fecha Válida No Festiva",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-02-28",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-02-28"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Verificar Fecha - Traslado al Lunes (Santos Reyes)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-01-09",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-01-09"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Verificar Fecha - Semana Santa (Jueves Santo)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-04-06",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-04-06"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Verificar Fecha - Pascua Trasladado al Lunes (Corpus Christi)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-06-12",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-06-12"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Verificar Fecha - Parámetros de Ruta (Ejemplo PDF ITM)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar/2023/6/12",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar", "2023", "6", "12"]
+        }
+      }
+    },
+    {
+      "name": "7. Error - Fecha Inexistente (35 de febrero - Ejemplo PDF)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-02-35",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-02-35"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. Error - 29 de febrero en año no bisiesto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/verificar?fecha=2023-02-29",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "verificar"],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2023-02-29"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Listar Festivos del Año 2023 (Endpoint B)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/anio/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "anio", "2023"]
+        }
+      }
+    },
+    {
+      "name": "10. Listar Festivos del Año 2024",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/anio/2024",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "anio", "2024"]
+        }
+      }
+    },
+    {
+      "name": "11. Listar Festivos - Alias Página 5 PDF (/obtener/2023)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/obtener/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "obtener", "2023"]
+        }
+      }
+    },
+    {
+      "name": "12. Error - Año Inválido",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/festivos/anio/invalido",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "festivos", "anio", "invalido"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}

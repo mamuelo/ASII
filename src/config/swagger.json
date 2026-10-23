@@ -1,0 +1,168 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Festivos Colombia - Taller 1 ITM",
+    "version": "1.0.0",
+    "description": "API RESTful desarrollada en Node.js, Express y MongoDB para la verificación y cálculo de días festivos en Colombia. Implementa las reglas de festivos fijos, Ley Emiliani (traslado al lunes) y festivos basados en el Domingo de Pascua (algoritmo de Gauss con excepciones gregorianas).",
+    "contact": {
+      "name": "Instituto Tecnológico Metropolitano (ITM)"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor local de desarrollo"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Festivos",
+      "description": "Operaciones para consulta y validación de festivos colombianos"
+    }
+  ],
+  "paths": {
+    "/api/festivos/verificar": {
+      "get": {
+        "tags": ["Festivos"],
+        "summary": "Verificar si una fecha es festiva en Colombia",
+        "description": "Recibe una fecha en formato ISO YYYY-MM-DD y determina si corresponde a un festivo nacional en Colombia, aplicando las reglas de festivos fijos, Ley Emiliani y Pascua.",
+        "parameters": [
+          {
+            "name": "fecha",
+            "in": "query",
+            "required": true,
+            "description": "Fecha a consultar en formato YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-06-12"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta realizada exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fecha": { "type": "string", "example": "2023-06-12" },
+                    "esFestivo": { "type": "boolean", "example": true },
+                    "festivo": { "type": "string", "nullable": true, "example": "Corpus Christi" },
+                    "tipo": { "type": "integer", "nullable": true, "example": 4 },
+                    "descripcionTipo": { "type": "string", "nullable": true, "example": "Basado en el Domingo de Pascua y Ley de Puente (Trasladado al siguiente lunes)" },
+                    "mensaje": { "type": "string", "example": "Es Festivo" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fecha inválida o parámetro faltante",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "Bad Request" },
+                    "codigo": { "type": "integer", "example": 400 },
+                    "mensaje": { "type": "string", "example": "Fecha No valida: el mes 2 del año 2023 solo tiene 28 días (se recibió día 35)." }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor o de conexión con MongoDB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "Internal Server Error" },
+                    "codigo": { "type": "integer", "example": 500 },
+                    "mensaje": { "type": "string", "example": "Error de persistencia: no se pudo establecer conexión con el servidor de MongoDB." }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/festivos/verificar/{anio}/{mes}/{dia}": {
+      "get": {
+        "tags": ["Festivos"],
+        "summary": "Verificar fecha mediante parámetros de ruta",
+        "description": "Variante de ruta alternativa fiel a la captura de Postman del taller ITM.",
+        "parameters": [
+          { "name": "anio", "in": "path", "required": true, "schema": { "type": "integer", "example": 2023 } },
+          { "name": "mes", "in": "path", "required": true, "schema": { "type": "integer", "example": 6 } },
+          { "name": "dia", "in": "path", "required": true, "schema": { "type": "integer", "example": 12 } }
+        ],
+        "responses": {
+          "200": { "description": "Consulta exitosa" },
+          "400": { "description": "Parámetros de fecha inválidos" }
+        }
+      }
+    },
+    "/api/festivos/anio/{anio}": {
+      "get": {
+        "tags": ["Festivos"],
+        "summary": "Consultar todos los festivos de un año",
+        "description": "Calcula y retorna la lista completa y ordenada cronológicamente de los festivos colombianos para el año indicado.",
+        "parameters": [
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "description": "Año a consultar (1900 - 2199)",
+            "schema": {
+              "type": "integer",
+              "example": 2023
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de festivos calculada exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "festivo": { "type": "string", "example": "Año nuevo" },
+                      "nombre": { "type": "string", "example": "Año nuevo" },
+                      "fecha": { "type": "string", "example": "2023-01-01" },
+                      "tipo": { "type": "integer", "example": 1 },
+                      "descripcionTipo": { "type": "string", "example": "Fijo (No se traslada)" },
+                      "fechaOriginal": { "type": "string", "example": "2023-01-06" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Año inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "Bad Request" },
+                    "codigo": { "type": "integer", "example": 400 },
+                    "mensaje": { "type": "string", "example": "Año inválido: 'abc'. Debe ser un número entero válido (ej: 2023)." }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
