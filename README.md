@@ -1,4 +1,13 @@
-# API RESTful Festivos Colombia — Taller 1 ITM
+# Taller de Arquitectura de Software II — ITM
+
+Este repositorio contiene la solución completa de la arquitectura de microservicios para la gestión de festivos y calendarios:
+
+1. **API #1 (Festivos Colombia)**: Microservicio en **Node.js + Express.js + MongoDB** (en la raíz).
+2. **API #2 (Calendario Anual)**: Microservicio en **Spring Boot 3 + PostgreSQL** (en la carpeta [`calendario-api/`](./calendario-api/README.md)).
+
+---
+
+# API RESTful Festivos Colombia — Taller 1 ITM (API #1)
 
 Servicio web RESTful desarrollado en **Node.js**, **Express.js** y **MongoDB** con **Mongoose** para la consulta, verificación y cálculo dinámico de días festivos en Colombia.
 

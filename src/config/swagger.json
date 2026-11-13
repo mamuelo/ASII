@@ -1,17 +1,21 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "API Festivos Colombia - Taller 1 ITM",
+    "title": "API Festivos Colombia - Entrega 3 ITM",
     "version": "1.0.0",
-    "description": "API RESTful desarrollada en Node.js, Express y MongoDB para la verificación y cálculo de días festivos en Colombia. Implementa las reglas de festivos fijos, Ley Emiliani (traslado al lunes) y festivos basados en el Domingo de Pascua (algoritmo de Gauss con excepciones gregorianas).",
+    "description": "API RESTful desarrollada en Node.js, Express y MongoDB para la verificación y cálculo de días festivos en Colombia (Entrega 3).",
     "contact": {
       "name": "Instituto Tecnológico Metropolitano (ITM)"
     }
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
-      "description": "Servidor local de desarrollo"
+      "url": "/",
+      "description": "Servidor actual"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "API Festivos (Express JS)"
     }
   ],
   "tags": [

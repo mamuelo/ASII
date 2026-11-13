@@ -19,3 +19,10 @@ coverage/
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+# Herramientas locales y compilación Java / Spring Boot
+.tools/
+target/
+.m2/
+.flattened-pom.xml
+

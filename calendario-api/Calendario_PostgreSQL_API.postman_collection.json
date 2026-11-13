@@ -1,0 +1,117 @@
+{
+  "info": {
+    "_postman_id": "f5b61c92-7489-4b68-8a8b-1e5f3c9d2a01",
+    "name": "API Calendario PostgreSQL - Taller 2 ITM",
+    "description": "Colección de pruebas para la API RESTful de Generación y Consulta de Calendario (Spring Boot + PostgreSQL) que consume la API de Festivos (Express + MongoDB).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Generar Calendario 2023 (Año Común - 365 días)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/generar/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "generar", "2023"]
+        },
+        "description": "Genera y almacena en PostgreSQL los 365 días del año 2023 clasificándolos como festivo, fin de semana o laboral."
+      }
+    },
+    {
+      "name": "2. Generar Calendario 2024 (Año Bisiesto - 366 días)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/generar/2024",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "generar", "2024"]
+        },
+        "description": "Genera y almacena los 366 días del año bisiesto 2024 incluyendo el 29 de febrero."
+      }
+    },
+    {
+      "name": "3. Listar Calendario 2023",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/listar/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "listar", "2023"]
+        },
+        "description": "Retorna cronológicamente todos los días almacenados en PostgreSQL para el año 2023."
+      }
+    },
+    {
+      "name": "4. Listar Calendario 2024",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/listar/2024",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "listar", "2024"]
+        },
+        "description": "Retorna los 366 días ordenados de 2024."
+      }
+    },
+    {
+      "name": "5. Error - Consultar Año No Generado (404 Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/listar/2099",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "listar", "2099"]
+        },
+        "description": "Retorna HTTP 404 cuando se solicita un año que aún no ha sido generado en la base de datos."
+      }
+    },
+    {
+      "name": "6. Error - Año Fuera de Rango (400 Bad Request)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/generar/1800",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "generar", "1800"]
+        },
+        "description": "Retorna HTTP 400 cuando se envía un año fuera del rango soportado [1900 - 2199]."
+      }
+    },
+    {
+      "name": "7. Error - Parámetro No Numérico (400 Bad Request)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/calendario/generar/invalido",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "calendario", "generar", "invalido"]
+        },
+        "description": "Retorna HTTP 400 cuando el parámetro de ruta no es un número entero."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
